@@ -17,9 +17,7 @@ class HomeContainer extends React.Component{
         .then(rooms=> this.setState({rooms}))
 
 
-        // fetch("http://localhost:3000/users")
-        // .then(resp=>resp.json())
-        // .then(users=> this.setState({users}))
+    
     }
 
 
