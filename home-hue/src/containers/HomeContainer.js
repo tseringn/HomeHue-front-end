@@ -1,59 +1,47 @@
 import React from 'react';
-import { Button, Card, Image } from 'semantic-ui-react'
+import RoomCard from '../components/RoomCard'
+import NavBar from '../components/NavBar'
+import { Button, Card, Image, Icon } from 'semantic-ui-react'
 
 
 class HomeContainer extends React.Component{
 
     state = {
-        rooms: []
+        rooms: [],
+        // users: []
     }
 
     componentDidMount(){
         fetch("http://localhost:3000/rooms")
         .then(resp=>resp.json())
         .then(rooms=> this.setState({rooms}))
+
+
+        // fetch("http://localhost:3000/users")
+        // .then(resp=>resp.json())
+        // .then(users=> this.setState({users}))
     }
 
+
+
     render(){
+        let mostRecentRooms = this.state.rooms.slice(Math.max(this.state.rooms.length - 15, 0))
+        let mostLikedRooms = this.state.rooms.sort((a,b)=> a.likes.length < b.likes.length ? 1 : -1).slice(0,15)
+
         return(
             <div>
-                <h1>Home Hue</h1>
-                <Button inverted color='teal'>
-                    Teal
-                </Button>
-                <Button animated='fade' color="red" onClick={()=>this.props.history.push('/login')}>
-                    <Button.Content visible>Login or Create Account</Button.Content>
-                    <Button.Content hidden>Start Hueing!</Button.Content>
-                </Button>
+                <NavBar history={this.props.history}/>
+                <h1>Home Hue- LOGO HERE</h1>
+                
+
                 <h3>Recently Created Room Schemes:</h3>
-                {this.state.rooms.map(room=><h1>{room.name}</h1>)}
-                <Card.Group>
-                    <Card>
-                    <Card.Content>
-                        <Image
-                        floated='right'
-                        size='mini'
-                        src='/images/avatar/large/steve.jpg'
-                        />
-                        <Card.Header>Steve Sanders</Card.Header>
-                        <Card.Meta>Friends of Elliot</Card.Meta>
-                        <Card.Description>
-                        Steve wants to add you to the group <strong>best friends</strong>
-                        </Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                        <div className='ui two buttons'>
-                        <Button basic color='green'>
-                            Approve
-                        </Button>
-                        <Button basic color='red'>
-                            Decline
-                        </Button>
-                        </div>
-                    </Card.Content>
-                    </Card>
-                </Card.Group>
+                    {mostRecentRooms.map(room=>(<RoomCard key ={room.id} {...room}/>))}
+
+                <h3>Top Ranked Room Schemes:</h3>
+                    {mostLikedRooms.map(room=>(<RoomCard key ={room.id} {...room}/>))}
+      
             </div>
+            
         )
     }
 }

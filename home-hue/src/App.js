@@ -10,6 +10,7 @@ function App() {
   return (
     <Router>
       <div>
+        
         <Route exact path="/" render= {routerProps => <HomeContainer {...routerProps}/>} />
         <Route exact path="/login" component={Login}/>
       </div>
