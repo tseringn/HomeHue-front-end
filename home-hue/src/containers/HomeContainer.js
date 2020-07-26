@@ -28,7 +28,7 @@ class HomeContainer extends React.Component{
 
         return(
             <div>
-                <NavBar history={this.props.history}/>
+                <NavBar history={this.props.history} currentUser={this.props.currentUser} logout={this.props.logout}/>
                 <h1>Home Hue- LOGO HERE</h1>
                 
 

@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import HomeContainer from './containers/HomeContainer'
+import UserPage from './containers/UserPage'
 import Login from './components/Login'
 
 class  App extends React.Component {
@@ -18,9 +19,21 @@ state={
         .then(users=> this.setState({users}))
   }
 
-  setCurrentUser=(id)=>{
-    this.setState({currentUser: id})
+  handleNewUser = (newUser) => {
+    this.setState({users: [...this.state.users, newUser]})
   }
+
+
+  setCurrentUser=(user)=>{
+    this.setState({currentUser: user})
+
+  }
+
+  logout = () => {
+    this.setState({currentUser: null})
+  }
+
+  
 
 
 
@@ -29,10 +42,11 @@ state={
       <Router>
         <div>
         
-          <Route exact path="/" render= {routerProps => <HomeContainer {...routerProps}/>} />
+          <Route exact path="/" render= {routerProps => <HomeContainer {...routerProps} currentUser={this.state.currentUser} logout={this.logout}/>} />
           <Route exact path="/login" render={routerProps=>
-              <Login {...routerProps} users={this.state.users} setCurrentUser={this.setCurrentUser} />
+              <Login {...routerProps} users={this.state.users} setCurrentUser={this.setCurrentUser} handleNewUser={this.handleNewUser}/>
             }/>
+          <Route exact path='/rooms' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} />} />
         </div>
       </Router>
     )

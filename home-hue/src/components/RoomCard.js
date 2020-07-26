@@ -8,7 +8,7 @@ const RoomCard = (props) => {
     <div className="ui card">
         <div className="content">
             <div className="right floated meta">{props.created_at}</div>
-            <img className="ui avatar image" src={props.user.image_url}/> {props.name}
+            <img className="ui avatar image" src={props.user.image_url} alt="user"/> {props.name}
         </div>
         <div className="image">
             <img src={props.img_url} alt={props.name}/>

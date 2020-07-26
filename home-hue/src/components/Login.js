@@ -11,6 +11,10 @@ class Login extends React.Component{
             email: '',
             password: '',
             image_url: '',
+        },
+        login: {
+            username: '',
+            password: ''
         }
     }
 
@@ -19,23 +23,27 @@ class Login extends React.Component{
         this.setState({newUser: {...this.state.newUser, [e.target.name]: e.target.value}})
     }
 
+    handleLoginChange = e => {
+        this.setState({login: {...this.state.login, [e.target.name]: e.target.value}})
+    }
+
 
     loginForm = () => {
 
         return (
-            <form>
+            <form onSubmit={this.handleSubmitLogin}>
                 <div className="ui large form" id="login-form">
                 <h2>Login</h2>
                 <div className="two fields">
                   <div className="field">
                     <label>Username</label>
-                    <input id='login-input-1' className = "input" placeholder="Username" type="text"/>
+                    <input onChange={this.handleLoginChange} value= {this.state.login.username} name="username" id='login-input-1' className = "input" placeholder="Username" type="text"/>
                   </div>
                   </div>
                   <div className="two fields">
                   <div className="field">
                     <label>Password</label>
-                    <input className = "input" placeholder="Password" type="password"/>
+                    <input onChange={this.handleLoginChange} value= {this.state.login.password} name = "password" className = "input" placeholder="Password" type="password"/>
                   </div>
                 </div>
                
@@ -52,6 +60,22 @@ class Login extends React.Component{
         // this.setState({newAccount: this})
     }
 
+    handleSubmitLogin = e => {
+        e.preventDefault()
+        let user = this.props.users.find(user=> user.username === this.state.login.username)
+        if (user){
+           if (user.password === this.state.login.password){
+                this.props.setCurrentUser(user)
+                this.props.history.push('/')  
+           } else {
+                alert("incorrect password")
+           }     
+        } else {
+         alert("Username not found")   
+        }
+        this.setState({login: {username: '', password: '' }})                        
+    }
+
     handleSubmitAccount=e=>{
         e.preventDefault()
         fetch('http://localhost:3000/users', {
@@ -64,7 +88,9 @@ class Login extends React.Component{
         })
         .then(r=>r.json())
         .then(newUser=>{
-            this.props.setCurrentUser(newUser.id)
+            this.props.handleNewUser(newUser)
+            this.props.setCurrentUser(newUser)
+            this.props.history.push('/') 
             this.setState({ newUser: {
                 name: '',
                 username: '',

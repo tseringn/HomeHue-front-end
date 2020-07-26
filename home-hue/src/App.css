@@ -36,6 +36,17 @@
   justify-content: space-around;
 }
 
+.navbar-logo{
+  height: 4em; 
+  width: 4em;
+}
+
+.navbar-search{
+
+  margin-bottom: -10px;
+  height: 2.5em;
+}
+
 
 
 #create-account-form, #login-form{
@@ -65,6 +76,21 @@
 
 }
 
+.navbar-user-image{
+  border-radius: 50%;
+  margin: 10px;
+}
+
+
+.navbar-user-name{
+  margin-left: 10px;
+}
+
+.user-page-home-button{
+  height: 4em;
+  weight: 4em;
+  margin: 2em;
+}
 
 @keyframes App-logo-spin {
   from {
