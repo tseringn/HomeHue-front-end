@@ -102,16 +102,37 @@
  .user-page-nav{
    display: flex;
    justify-content: flex-start;
+   background-image: url('./usernav.png');
+   background-repeat: no-repeat;
    
  }
  .user-page-nav > .user-page-icon {
   margin: .5em;
   padding-bottom: -10px;
  }
+
+ .user-header-info{
+  display: flex;
+  justify-content: center;
+  margin-top: -3em;
+  margin-right: 2em;
+ }
+
  .user-page-icon :hover{
   height: 2.5em;
   width: 2.5em;
   color: grey;
+ }
+
+ .main-profile-picture{
+  object-fit: cover;
+  object-position: center; /* Center the image within the element */
+   width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: solid rgb(75, 74, 74) 2px;
+   
  }
 
 @keyframes App-logo-spin {
