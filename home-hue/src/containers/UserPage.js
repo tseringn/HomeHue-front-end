@@ -10,8 +10,14 @@ class UserPage extends React.Component{
     render(){
         return(
             <div>
-                <img onClick={()=>this.props.history.push('/')}className= "user-page-home-button" src="./LogoIcon.png" alt="logo"/>
-                <h4>{this.props.currentUser.name}</h4>
+                <div className="user-page-nav">
+                    
+                    <i onClick={()=>this.props.history.push('/')}  className="home basic icon huge user-page-icon"></i>
+                    
+                    <i  className="pencil icon huge user-page-icon" ></i>
+                    <i className="add sign icon huge user-page-icon"></i>
+                </div>
+                
                 <h2>My Rooms</h2>
             </div>
         )
