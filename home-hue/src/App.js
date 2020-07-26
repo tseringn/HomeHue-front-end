@@ -31,7 +31,8 @@ state={
         
           <Route exact path="/" render= {routerProps => <HomeContainer {...routerProps}/>} />
           <Route exact path="/login" render={routerProps=>
-            <Login {...routerProps} users={this.state.users} setCurrentUser={this.setCurrentUser} />}/>
+              <Login {...routerProps} users={this.state.users} setCurrentUser={this.setCurrentUser} />
+            }/>
         </div>
       </Router>
     )

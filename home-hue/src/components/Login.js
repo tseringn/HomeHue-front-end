@@ -19,6 +19,7 @@ class Login extends React.Component{
         this.setState({newUser: {...this.state.newUser, [e.target.name]: e.target.value}})
     }
 
+
     loginForm = () => {
 
         return (
@@ -28,7 +29,7 @@ class Login extends React.Component{
                 <div className="two fields">
                   <div className="field">
                     <label>Username</label>
-                    <input className = "input" placeholder="Username" type="text"/>
+                    <input id='login-input-1' className = "input" placeholder="Username" type="text"/>
                   </div>
                   </div>
                   <div className="two fields">
