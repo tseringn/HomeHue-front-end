@@ -3,7 +3,8 @@ import React from 'react'
 const NavBar = (props) => {
 
     return (
-        <div className="ui inverted menu" id="navbar">  
+        <div className="ui inverted menu" id="navbar">
+            <img src="./LogoWhite.png" alt="logo" style={{height: '4em', width: '4em'}}/>
             <a className="active item">Home</a>  
             <a className="item">Messages</a>  
             <a className="item">Friends</a>

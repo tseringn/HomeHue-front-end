@@ -130,9 +130,12 @@ class Login extends React.Component{
     render(){
         console.log(this.state.newUser)
         return(
-            <div>
-            <h1 className="display-1">LOGO HERE</h1>
-            {this.state.newAccount ? this.createAccountForm() : this.loginForm()}
+            <div className="login-page">
+            <img className = "login-logo" src="./Logo.png" alt="logo" />
+                <div style={{display: 'flex', justifyContent: 'space-around'}}>
+                {this.state.newAccount ? this.createAccountForm() : this.loginForm()}
+                {/* <img className="design-image" src="./designPhoto3.png" alt ="design" /> */}
+                </div>
             </div>
         )
     }
