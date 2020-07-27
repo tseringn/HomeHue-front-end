@@ -10,6 +10,7 @@ class UserPage extends React.Component{
         
         modalOpen: false,
         room: {
+            user_id: this.props.currentUser.id,
             name: '',
             description: '',
             img_url: '',
@@ -23,7 +24,8 @@ class UserPage extends React.Component{
     handleClose = () => this.setState({ modalOpen: false })
 
     getUsersRooms = () => {
-        return this.props.currentUser.rooms.map(room=>(<RoomCard key ={room.id} {...room} user={this.props.currentUser} />))
+        let userRooms = this.props.rooms.filter(room => room.user_id===this.props.currentUser.id)
+        return userRooms.map(room=>(<RoomCard key ={room.id} {...room} user={this.props.currentUser} />))
     }
 
     handleChange = (e) => {
@@ -34,11 +36,28 @@ class UserPage extends React.Component{
         this.setState({room: {...this.state.room, pvt: !this.state.room.pvt} })
     }
 
+    handleSubmit = (e) => {
+        e.preventDefault()
+        fetch('http://localhost:3000/rooms', {
+            method: "POST",
+            headers: {
+                accept: 'application/json',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(this.state.room)
+        })
+        .then(resp=>resp.json())
+        .then(newRoom=> {
+        this.props.handleNewRoom(newRoom)
+        this.handleClose()  
+        })
+    }
+
     newRoomForm = () => {
 
         const {name, description, img_url,pvt} = this.state.room
 
-    return (<form  >
+    return (<form onSubmit={this.handleSubmit} >
             <div className="ui large form" id="login-form" >
             <h2>Create a Room</h2>
             <div className="two fields">
@@ -58,7 +77,7 @@ class UserPage extends React.Component{
                 <div className="two fields">
                     <div className="field">
                         {/* <label>Email</label> */}
-                        <input onChange={this.handleChange}  name='img_url' value={img_url} className = "input" placeholder="Main Room Image URL Here" type="email"/>
+                        <input onChange={this.handleChange}  name='img_url' value={img_url} className = "input" placeholder="Main Room Image URL Here" type="text"/>
                     </div>
                 </div>
 
@@ -70,7 +89,7 @@ class UserPage extends React.Component{
                 </div>
             
         
-            <button className="ui submit grey button" type='submit'>Create Account</button>
+            <button className="ui submit grey button" type='submit' >Create Room</button>
             <button className="ui submit grey button" onClick={this.handleClose}>Cancel</button>
         </div>
         </form>)

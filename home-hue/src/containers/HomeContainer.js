@@ -6,25 +6,11 @@ import { Button, Card, Image, Icon } from 'semantic-ui-react'
 
 class HomeContainer extends React.Component{
 
-    state = {
-        rooms: [],
-        // users: []
-    }
-
-    componentDidMount(){
-        fetch("http://localhost:3000/rooms")
-        .then(resp=>resp.json())
-        .then(rooms=> this.setState({rooms}))
-
-
-    
-    }
-
-
-
     render(){
-        let mostRecentRooms = this.state.rooms.slice(Math.max(this.state.rooms.length - 15, 0))
-        let mostLikedRooms = this.state.rooms.sort((a,b)=> a.likes.length < b.likes.length ? 1 : -1).slice(0,15)
+
+        let publicRooms= this.props.rooms.filter(room=>room.pvt===false)
+        let mostRecentRooms = publicRooms.slice(Math.max(publicRooms.length - 15, 0))
+        let mostLikedRooms = publicRooms.sort((a,b)=> a.likes.length < b.likes.length ? 1 : -1).slice(0,15)
 
         return(
             <div>

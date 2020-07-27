@@ -76,6 +76,15 @@ class Login extends React.Component{
         this.setState({login: {username: '', password: '' }})                        
     }
 
+    toTitleCase= (str)=>{
+        return str.replace(
+            /\w\S*/g,
+            function(txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            }
+        );
+    }
+
     handleSubmitAccount=e=>{
         e.preventDefault()
         fetch('http://localhost:3000/users', {
@@ -84,7 +93,15 @@ class Login extends React.Component{
                 accept: 'application/json',
             'content-type': 'application/json'
             },
-            body: JSON.stringify(this.state.newUser)
+            body: JSON.stringify({
+
+                name: this.toTitleCase(this.state.newUser.name),
+                username: this.state.newUser.username.toLowerCase(),
+                email: this.state.newUser.email,
+                password: this.state.newUser.password,
+                image_url: this.state.newUser.image_url
+            
+            })
         })
         .then(r=>r.json())
         .then(newUser=>{
@@ -102,6 +119,7 @@ class Login extends React.Component{
         })
         
     }
+
     createAccountForm = () => {
         const {name, username, password, email, image_url}=this.state.newUser
         return (

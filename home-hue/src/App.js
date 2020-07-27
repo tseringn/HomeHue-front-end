@@ -10,6 +10,7 @@ import Login from './components/Login'
 class  App extends React.Component {
 state={
     users: [],
+    rooms:[],
     currentUser: null
   }
 
@@ -17,10 +18,18 @@ state={
         fetch("http://localhost:3000/users")
         .then(resp=>resp.json())
         .then(users=> this.setState({users}))
+
+        fetch("http://localhost:3000/rooms")
+        .then(resp=>resp.json())
+        .then(rooms=> this.setState({rooms}))
   }
 
   handleNewUser = (newUser) => {
     this.setState({users: [...this.state.users, newUser]})
+  }
+
+  handleNewRoom = (newRoom) => {
+    this.setState({rooms: [...this.state.rooms, newRoom]})
   }
 
 
@@ -42,11 +51,11 @@ state={
       <Router>
         <div>
         
-          <Route exact path="/" render= {routerProps => <HomeContainer {...routerProps} currentUser={this.state.currentUser} logout={this.logout}/>} />
+          <Route exact path="/" render= {routerProps => <HomeContainer {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser} logout={this.logout}/>} />
           <Route exact path="/login" render={routerProps=>
               <Login {...routerProps} users={this.state.users} setCurrentUser={this.setCurrentUser} handleNewUser={this.handleNewUser}/>
             }/>
-          <Route exact path='/rooms' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} />} />
+          <Route exact path='/rooms' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} rooms={this.state.rooms} handleNewRoom={this.handleNewRoom}/>} />
         </div>
       </Router>
     )

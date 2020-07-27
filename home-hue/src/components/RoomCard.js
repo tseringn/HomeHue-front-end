@@ -8,10 +8,14 @@ const RoomCard = (props) => {
     <div className="ui card">
         <div className="content">
             <div className="right floated meta">{props.created_at}</div>
-            <img className="ui avatar image" src={props.user.image_url} alt="user"/> {props.name}
+            <img className="ui avatar image" src={props.user.image_url} alt="user"/> @{props.user.username}
         </div>
         <div className="image">
             <img src={props.img_url} alt={props.name}/>
+        </div>
+        <div className="content">
+            <h5><strong>{props.name}</strong></h5>
+            {props.description}
         </div>
         <div className="content">
             <span className="right floated">
