@@ -32,6 +32,30 @@ state={
     this.setState({rooms: [...this.state.rooms, newRoom]})
   }
 
+  handleNewRoomLike =(newLike) => {
+    let newRoomsArray = this.state.rooms.map(room=>{
+      if (room.id===newLike.room_id){
+        return {...room, likes:[...room.likes, newLike]}
+      }
+      return room
+    })
+    this.setState({rooms: newRoomsArray})
+  }
+
+  handleUnlike = (likeId, roomId) => {    
+    
+    let room = this.state.rooms.find(room=> room.id===roomId)
+    let editedRoom ={...room, likes: [...room.likes.filter(like=>like.id !== likeId)]}
+
+    let newRoomsArray = this.state.rooms.map(room=>{
+      if (room.id===roomId){
+        return editedRoom
+      }
+      return room
+    })
+
+    this.setState({rooms: newRoomsArray})
+  }
 
   setCurrentUser=(user)=>{
     this.setState({currentUser: user})
@@ -47,15 +71,16 @@ state={
 
 
   render(){
+    
     return (
       <Router>
         <div>
         
-          <Route exact path="/" render= {routerProps => <HomeContainer {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser} logout={this.logout}/>} />
+          <Route exact path="/" render= {routerProps => <HomeContainer {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser} logout={this.logout} handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike}/>} />
           <Route exact path="/login" render={routerProps=>
               <Login {...routerProps} users={this.state.users} setCurrentUser={this.setCurrentUser} handleNewUser={this.handleNewUser}/>
             }/>
-          <Route exact path='/rooms' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} rooms={this.state.rooms} handleNewRoom={this.handleNewRoom}/>} />
+          <Route exact path='/rooms' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} rooms={this.state.rooms} handleNewRoom={this.handleNewRoom} handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike}/>} />
         </div>
       </Router>
     )

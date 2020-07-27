@@ -25,7 +25,7 @@ class UserPage extends React.Component{
 
     getUsersRooms = () => {
         let userRooms = this.props.rooms.filter(room => room.user_id===this.props.currentUser.id)
-        return userRooms.map(room=>(<RoomCard key ={room.id} {...room} user={this.props.currentUser} />))
+        return userRooms.map(room=>(<RoomCard key ={room.id} {...room} currentUser={this.props.currentUser} handleNewRoomLike={this.props.handleNewRoomLike} handleUnlike={this.props.handleUnlike} history={this.props.history}/>))
     }
 
     handleChange = (e) => {

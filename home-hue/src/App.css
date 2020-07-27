@@ -31,6 +31,16 @@
   color: #61dafb;
 }
 
+.logo-banner-img{
+ 
+  width: 100%;
+
+}
+
+.banner-img{
+  width: 100%;
+}
+
 #navbar {
   display: flex;
   justify-content: space-around;
