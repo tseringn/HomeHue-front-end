@@ -79,6 +79,9 @@ const RoomCard = (props) => {
         <div className="image">
             <img className='room-image' src={props.img_url} alt={props.name}/>
         </div>
+        <div>
+            <button onClick={()=>props.history.push(`/rooms/${props.id}`)}>View Room </button>
+        </div>
         <div className="content">
             <h5><strong>{props.name}</strong></h5>
             {props.description}

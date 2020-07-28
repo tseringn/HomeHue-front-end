@@ -36,6 +36,15 @@ class UserPage extends React.Component{
         this.setState({room: {...this.state.room, pvt: !this.state.room.pvt} })
     }
 
+    toTitleCase= (str)=>{
+        return str.replace(
+            /\w\S*/g,
+            function(txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            }
+        );
+    }
+
     handleSubmit = (e) => {
         e.preventDefault()
         fetch('http://localhost:3000/rooms', {
@@ -44,7 +53,13 @@ class UserPage extends React.Component{
                 accept: 'application/json',
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(this.state.room)
+            body: JSON.stringify({
+                user_id: this.state.room.user_id,
+                name: this.toTitleCase(this.state.room.name),
+                description: this.state.room.description,
+                img_url: this.state.room.img_url,
+                pvt: this.state.room.pvt
+             })
         })
         .then(resp=>resp.json())
         .then(newRoom=> {
