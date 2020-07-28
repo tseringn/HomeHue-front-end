@@ -5,15 +5,17 @@ import React from 'react'
 
 const RoomCard = (props) => {
     
-    
+  
     
     const handleLikeClick = (e) => {
+       
         if(props.currentUser){ 
-            if (!heartAppearance()){    
-                postLike()
+            if (heartAppearance()){    
+                deleteLike()
+                
                 // e.target.classList.remove('outline')
             } else {
-                deleteLike()
+                postLike()
                 // e.target.classList.add('outline')
             } 
         } else {
@@ -22,18 +24,12 @@ const RoomCard = (props) => {
     }
 
     const deleteLike = () => {
+       
         let likeId = props.likes.find(like=>like.user_id===props.currentUser.id).id
-        fetch(`http://localhost:3000/likes/${likeId}`,{
-            method: "DELETE",
-            headers: {
-                accept: 'application/json',
-                'content-type': 'application/json'
-            }
-        })
-        .then(resp=>resp.json())
-        .then(()=>{
-            props.handleUnlike(likeId, props.id)
-        })
+        
+        fetch(`http://localhost:3000/likes/${likeId}`,{method: "DELETE",})
+        props.handleUnlike(likeId, props.id)
+       
         
     }
 
@@ -45,40 +41,43 @@ const RoomCard = (props) => {
                 'content-type': 'application/json'
             },
             body: JSON.stringify({
-                user_id: props.currentUser,
+                user_id: props.currentUser.id,
                 room_id: props.id
             })
         })
         .then(resp=>resp.json())
         .then(newLike=> {
-            
+        console.log(newLike)
          props.handleNewRoomLike(newLike)
          
         })
+        .catch(error=> console.log(error))
     }
 
     const heartAppearance = () => {
-
+        let fun=0
         if (props.currentUser){        
             if (props.likes.find(like=>like.user_id===props.currentUser.id)){
-                return true
+                fun=1
             } else {
-                return false
+                fun=0
             }
         } else {
-         return false
-        }   
-    }
+         fun=0
+        }
         
+        return fun>0?true:false
+    }
 
-    return(                       
-    <div className="ui card">
+    return(   
+        <div className='room-card'>                 
+    <div className="ui card" >
         <div className="content">
             <div className="right floated meta">{props.created_at}</div>
             <img className="ui avatar image" src={props.user.image_url} alt="user"/> @{props.user.username}
         </div>
         <div className="image">
-            <img src={props.img_url} alt={props.name}/>
+            <img className='room-image' src={props.img_url} alt={props.name}/>
         </div>
         <div className="content">
             <h5><strong>{props.name}</strong></h5>
@@ -86,7 +85,8 @@ const RoomCard = (props) => {
         </div>
         <div className="content">
             <span className="right floated">
-            <i onClick={handleLikeClick} className={ heartAppearance() ? "heart red like icon" : "heart outline red like icon"}></i>
+            {heartAppearance()?<i onClick={handleLikeClick} className=  "heart red like icon"></i>
+            :<i onClick={(e)=>handleLikeClick()} className=  "heart outline red like icon"></i>}
             {props.likes.length}
             </span>
             <i className="comment icon"></i>
@@ -98,7 +98,8 @@ const RoomCard = (props) => {
             <input type="text" placeholder="Add Comment..."/>
             </div>
         </div>
-    </div>  
+    </div> 
+</div>    
     )
 }
 

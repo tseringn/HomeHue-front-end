@@ -42,11 +42,10 @@ state={
     this.setState({rooms: newRoomsArray})
   }
 
-  handleUnlike = (likeId, roomId) => {    
-    
+  handleUnlike = (likeId, roomId) => {
     let room = this.state.rooms.find(room=> room.id===roomId)
     let editedRoom ={...room, likes: [...room.likes.filter(like=>like.id !== likeId)]}
-
+    console.log('clicked Delete!' , 'like id', likeId, 'Room id', roomId)
     let newRoomsArray = this.state.rooms.map(room=>{
       if (room.id===roomId){
         return editedRoom
@@ -71,7 +70,7 @@ state={
 
 
   render(){
-    
+   
     return (
       <Router>
         <div>

@@ -172,7 +172,7 @@ class Login extends React.Component{
 
 
     render(){
-        console.log(this.state.newUser)
+        
         return(
             <div className="login-page">
             <img className = "login-logo" src="./Logo.png" alt="logo" />

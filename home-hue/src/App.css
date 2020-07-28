@@ -108,6 +108,18 @@
   width: 4em;
   margin: 2em;
 }
+.room-image {
+  object-fit: cover !important;
+  object-position:  center !important;
+  overflow: hidden !important;
+  width: 290px !important;
+  height: 300px !important;
+}
+
+  .room-card{
+   display: flex;
+  flex-wrap: wrap;
+  }
 
  .user-page-nav{
    display: flex;

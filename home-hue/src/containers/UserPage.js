@@ -108,9 +108,6 @@ class UserPage extends React.Component{
         <Modal.Content>
         {this.newRoomForm()}
         </Modal.Content>
-        <Modal.Actions>
-
-        </Modal.Actions>
     </Modal>
    )
         
