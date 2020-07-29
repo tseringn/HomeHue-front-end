@@ -32,7 +32,7 @@ state={
   handleEditedUser = (editedUser) => {
     let newUsersArray = this.state.users.map(user=>{
       if (editedUser.id===user.id){
-        return {...user, editedUser}
+        return editedUser
       }
       return user
     })
@@ -40,7 +40,7 @@ state={
   }
 
   updateCurrentUser = (editedUser) => {
-    this.setState({currentUser: {...this.state.currentUser, editedUser}})
+    this.setState({currentUser: editedUser})
   }
 
   handleNewRoom = (newRoom) => {
