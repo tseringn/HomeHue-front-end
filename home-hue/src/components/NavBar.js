@@ -10,13 +10,10 @@ const NavBar = (props) => {
     return (
         <div className="ui inverted menu" id="navbar" style={{position: 'fixed', width: '100%', zIndex: '3'}}>
             <img src="./LogoWhite.png" alt="logo" className="navbar-logo"/>
-            <a className="active item">Home</a>  
+            {/* <a className="active item">Home</a>   */}
             {props.currentUser && <a className="item" onClick={()=>props.history.push(`/@${props.currentUser.username}`)}><img className="navbar-user-image" src={props.currentUser.image_url} alt='user'/> <span className="navbar-user-name">{props.currentUser.name}</span> </a>} 
-            <a className="item">Friends</a>
-            <div className="ui icon input" id="search">
-                <input className="navbar-search ui icon input" type="text" placeholder="Search..."/>
-                <i className="circular search link icon"></i>
-            </div>
+            <a className="item" onClick={()=>props.history.push('/rooms')}>Browse Rooms</a>
+
             
             {props.currentUser
                 ? <button className="ui grey button " onClick={logout}>Logout</button>

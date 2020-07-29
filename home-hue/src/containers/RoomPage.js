@@ -54,7 +54,7 @@ class RoomPage extends React.Component{
     render(){
         console.log(this.props.match.params.id)
         return( 
-            <div classname="room-page" style={{backgroundImage: `url(${this.thisRoom().img_url})`, backgroundSize:'100%', backgroundRepeat: "no-repeat", paddingBottom: "30%"}}>
+            <div className="room-page" style={{backgroundImage: `url(${this.thisRoom().img_url})`, backgroundSize:'100%', backgroundRepeat: "no-repeat", paddingBottom: "30%"}}>
                 
                 <i className="arrow circle big left icon" onClick={()=>this.props.history.goBack()} style={{margin: '1em'}}></i>
                 <div className="room-page-header">

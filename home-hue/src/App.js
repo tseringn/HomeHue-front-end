@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import HomeContainer from './containers/HomeContainer'
+import RoomsContainer from './containers/RoomsContainer'
 import UserPage from './containers/UserPage'
 import Login from './components/Login'
 import RoomPage from './containers/RoomPage'
@@ -102,6 +103,7 @@ state={
             }/>
           <Route exact path='/@:id' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} rooms={this.state.rooms} handleNewRoom={this.handleNewRoom} handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike} handleEditedUser={this.handleEditedUser} updateCurrentUser={this.updateCurrentUser}/>} />
           <Route exact  path ='/rooms/:id' render={routerProps=><RoomPage {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser} handleDeleteRoom={this.handleDeleteRoom}/>}/>
+          <Route exact path='/rooms' render={routerProps=><RoomsContainer {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser}  handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike}/>}/>
         </div>
       </Router>
     )
