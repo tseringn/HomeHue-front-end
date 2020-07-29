@@ -251,14 +251,14 @@ class UserPage extends React.Component{
                 </div>
                 <div className="user-header-info">
                     <img className="main-profile-picture" src={this.props.currentUser.image_url} alt={this.props.currentUser.name}/>
-                    <div>
+                    <div className='user-title-name'>
                         <h2>{this.props.currentUser.name}</h2>
-                        <small>@{this.props.currentUser.username}</small>
-                        <h5>{this.props.currentUser.email}</h5>
+                        <h6>@{this.props.currentUser.username}</h6>
+                        {/* <h5>{this.props.currentUser.email}</h5> */}
                     </div> 
                 </div>
 
-                <div className="room-card-container">
+                <div className="room-card-container user-room-cards">
                 {this.getUsersRooms()}
                 </div>
             </div>

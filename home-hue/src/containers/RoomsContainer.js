@@ -23,8 +23,6 @@ class RoomsContainer extends React.Component {
                     <input className="navbar-search ui icon input" type="text" placeholder="Search..."/>
                     <i className="circular search link icon"></i>
                     </div>
-
-                    <h3>All Rooms:</h3>
                 </div>
                 <div className="room-card-container">
                     {this.props.rooms.map(room=>(<RoomCard key ={room.id} {...room} currentUser={this.props.currentUser} history={this.props.history} handleNewRoomLike={this.props.handleNewRoomLike} handleUnlike={this.props.handleUnlike}/>))}

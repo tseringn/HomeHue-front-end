@@ -83,11 +83,11 @@ class RoomPage extends React.Component{
                 }
 
 
-
-                {this.thisRoom().photos.map(photo=>
-                    <PhotoCard key={photo.id} {...photo}/>
-                )}
-
+                <div className="photo-card-container">
+                    {this.thisRoom().photos.map(photo=>
+                        <PhotoCard key={photo.id} {...photo}/>
+                    )}
+                </div>
             </div>
         )
     }

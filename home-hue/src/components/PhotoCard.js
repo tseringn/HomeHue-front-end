@@ -29,7 +29,7 @@ const PhotoCard = (props) => {
     return(
         <div>
             <div className="ui card">
-                <div className="image">
+                <div className="image photo-image">
                     <img src={props.img_url} alt='pic'/>
                 </div>
                 <div className="content">
