@@ -29,8 +29,8 @@ class RoomPage extends React.Component{
             })
         })
         .then(resp=>resp.json())
-        .then(res=> {
-            console.log(res)
+        .then(newPhoto=> {
+            console.log(newPhoto)
             this.setState({img_url: ''})
         })
     }
