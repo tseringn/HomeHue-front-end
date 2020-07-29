@@ -79,9 +79,14 @@ const RoomCard = (props) => {
         <div className="image">
             <img className='room-image' src={props.img_url} alt={props.name}/>
         </div>
-       
-        <div >
-            <button onClick={()=>props.history.push(`/rooms/${props.id}`)}>View Room </button>
+
+        <div className="extra content" style={{backgroundColor: 'lightGrey'}}>
+            <div className="center aligned">
+                <button onClick={()=>props.history.push(`/rooms/${props.id}`)} className="ui basic button ">
+                <i className="eye icon"></i>
+                    View Room
+                </button>
+            </div>
         </div>
         
         <div className="content">

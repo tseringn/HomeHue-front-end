@@ -29,8 +29,28 @@ state={
     this.setState({users: [...this.state.users, newUser]})
   }
 
+  handleEditedUser = (editedUser) => {
+    let newUsersArray = this.state.users.map(user=>{
+      if (editedUser.id===user.id){
+        return {...user, editedUser}
+      }
+      return user
+    })
+    this.setState({users: newUsersArray})
+  }
+
+  updateCurrentUser = (editedUser) => {
+    this.setState({currentUser: {...this.state.currentUser, editedUser}})
+  }
+
   handleNewRoom = (newRoom) => {
+    console.log(newRoom)
     this.setState({rooms: [...this.state.rooms, newRoom]})
+  }
+
+  handleDeleteRoom = (roomId) => {
+    let newRoomsArray = this.state.rooms.filter(room=> room.id !== roomId)
+    this.setState({rooms: newRoomsArray})
   }
 
   handleNewRoomLike =(newLike) => {
@@ -80,8 +100,8 @@ state={
           <Route exact path="/login" render={routerProps=>
               <Login {...routerProps} users={this.state.users} setCurrentUser={this.setCurrentUser} handleNewUser={this.handleNewUser}/>
             }/>
-          <Route exact path='/@:id' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} rooms={this.state.rooms} handleNewRoom={this.handleNewRoom} handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike}/>} />
-          <Route exact  path ='/rooms/:id' render={routerProps=><RoomPage {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser}/>}/>
+          <Route exact path='/@:id' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} rooms={this.state.rooms} handleNewRoom={this.handleNewRoom} handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike} handleEditedUser={this.handleEditedUser} updateCurrentUser={this.updateCurrentUser}/>} />
+          <Route exact  path ='/rooms/:id' render={routerProps=><RoomPage {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser} handleDeleteRoom={this.handleDeleteRoom}/>}/>
         </div>
       </Router>
     )

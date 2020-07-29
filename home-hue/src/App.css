@@ -39,6 +39,7 @@
 
 .banner-img{
   width: 100%;
+  margin-bottom: 10em;
 }
 
 #navbar {
@@ -156,6 +157,28 @@
     border: solid rgb(75, 74, 74) 2px;
    
  }
+
+.room-page-header{
+  margin: auto;
+  width: 50%;
+  justify-content: center;
+  text-align: center;
+  background-color: whitesmoke;
+  border-radius: 15px;
+  padding-bottom: 2em;
+  padding-top: 2em;
+  border-style: double;
+  border-width: 5px;
+}
+
+.room-page-actions{
+  justify-content: center;
+  text-align: center;
+}
+
+
+
+
 
 @keyframes App-logo-spin {
   from {

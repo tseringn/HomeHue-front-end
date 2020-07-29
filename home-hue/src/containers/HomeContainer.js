@@ -24,8 +24,12 @@ class HomeContainer extends React.Component{
                 <img className="logo-banner-img " src="./bannerimg3.png" alt="banner" />
 
                 <img className="banner-img" src="./bannerimg1.png" alt="banner" />
+
+                <img onClick={()=>this.props.history.push('/login')} className="banner-img" src="./bannerimg4.png" alt="banner" />
         
-    
+                <img className="banner-img" src="./roomsbanner.gif" alt="banner" />
+
+
 
                 <h3>Recently Created Room Schemes:</h3>
                     {mostRecentRooms.map(room=>(<RoomCard key ={room.id} {...room} currentUser={this.props.currentUser} history={this.props.history} handleNewRoomLike={this.props.handleNewRoomLike} handleUnlike={this.props.handleUnlike}/>))}
@@ -33,6 +37,15 @@ class HomeContainer extends React.Component{
                 <h3>Top Ranked Room Schemes:</h3>
                     {mostLikedRooms.map(room=>(<RoomCard key ={room.id} {...room} currentUser={this.props.currentUser} history={this.props.history} handleNewRoomLike={this.props.handleNewRoomLike} handleUnlike={this.props.handleUnlike}/>))}
       
+
+                <div class="ui inverted vertical footer segment" style={{textAlign: 'center'}}>
+                    <img src="./LogoWhite.png" alt="logo" className="navbar-logo"/>
+                    <div></div>
+                    <div class="ui container">
+                        ©️ Tsering Norbu & Chaya Greisman  
+                    </div>
+                </div>
+
             </div>
             
         )

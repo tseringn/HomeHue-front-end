@@ -4,7 +4,7 @@ import React from 'react';
 class Login extends React.Component{
 
     state ={ 
-        newAccount: false,
+        newAccount: true,
         newUser: {
             name: '',
             username: '',
