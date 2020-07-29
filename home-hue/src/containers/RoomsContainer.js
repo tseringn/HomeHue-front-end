@@ -14,20 +14,21 @@ class RoomsContainer extends React.Component {
 
             <div>
 
-                <i className="home basic big icon" onClick={()=>this.props.history.push('/')} style={{margin: '1em', }}></i>
+                <i className="home basic huge icon" onClick={()=>this.props.history.push('/')} style={{marginLeft: '1em', position: 'fixed', zIndex: '3', backgroundColor: "#D3D3D3", borderRadius: '20%', }}></i>
 
-                <h1>ROOOMMMSSS</h1>
+                <div className='rooms-container-content'>
+                    <h1>ROOOMMMSSS</h1>
 
-                <div className="ui icon input" id="search">
-                <input className="navbar-search ui icon input" type="text" placeholder="Search..."/>
-                <i className="circular search link icon"></i>
+                    <div className="ui icon input" id="search">
+                    <input className="navbar-search ui icon input" type="text" placeholder="Search..."/>
+                    <i className="circular search link icon"></i>
+                    </div>
+
+                    <h3>All Rooms:</h3>
                 </div>
-
-                <h3>Recently Created Room Schemes:</h3>
-                {mostRecentRooms.map(room=>(<RoomCard key ={room.id} {...room} currentUser={this.props.currentUser} history={this.props.history} handleNewRoomLike={this.props.handleNewRoomLike} handleUnlike={this.props.handleUnlike}/>))}
-
-                <h3>Top Ranked Room Schemes:</h3>
-                {mostLikedRooms.map(room=>(<RoomCard key ={room.id} {...room} currentUser={this.props.currentUser} history={this.props.history} handleNewRoomLike={this.props.handleNewRoomLike} handleUnlike={this.props.handleUnlike}/>))}
+                <div className="room-card-container">
+                    {this.props.rooms.map(room=>(<RoomCard key ={room.id} {...room} currentUser={this.props.currentUser} history={this.props.history} handleNewRoomLike={this.props.handleNewRoomLike} handleUnlike={this.props.handleUnlike}/>))}
+                </div>
             </div>
             
         )

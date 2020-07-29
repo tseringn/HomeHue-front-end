@@ -257,8 +257,10 @@ class UserPage extends React.Component{
                         <h5>{this.props.currentUser.email}</h5>
                     </div> 
                 </div>
+
+                <div className="room-card-container">
                 {this.getUsersRooms()}
-                
+                </div>
             </div>
         )
     }

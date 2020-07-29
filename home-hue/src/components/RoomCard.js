@@ -70,8 +70,8 @@ const RoomCard = (props) => {
     }
 
     return(   
-        <div className='room-card'>                 
-    <div className="ui card" >
+                   
+    <div className="ui card room-card" >
         <div className="content">
             <div className="right floated meta">{props.created_at}</div>
             <img className="ui avatar image" src={props.user.image_url} alt="user"/> @{props.user.username}
@@ -109,7 +109,7 @@ const RoomCard = (props) => {
             </div>
         </div>
     </div> 
-</div>    
+   
     )
 }
 

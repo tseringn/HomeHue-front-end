@@ -64,6 +64,16 @@ state={
     this.setState({rooms: newRoomsArray})
   }
 
+  handleNewRoomPhoto =(newPhoto) => {
+    let newRoomsArray = this.state.rooms.map(room=>{
+      if (room.id===newPhoto.room_id){
+        return {...room, photos:[...room.photos, newPhoto]}
+      }
+      return room
+    })
+    this.setState({rooms: newRoomsArray})
+  }
+
   handleUnlike = (likeId, roomId) => {
     let room = this.state.rooms.find(room=> room.id===roomId)
     let editedRoom ={...room, likes: [...room.likes.filter(like=>like.id !== likeId)]}
@@ -102,7 +112,7 @@ state={
               <Login {...routerProps} users={this.state.users} setCurrentUser={this.setCurrentUser} handleNewUser={this.handleNewUser}/>
             }/>
           <Route exact path='/@:id' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} rooms={this.state.rooms} handleNewRoom={this.handleNewRoom} handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike} handleEditedUser={this.handleEditedUser} updateCurrentUser={this.updateCurrentUser}/>} />
-          <Route exact  path ='/rooms/:id' render={routerProps=><RoomPage {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser} handleDeleteRoom={this.handleDeleteRoom}/>}/>
+          <Route exact  path ='/rooms/:id' render={routerProps=><RoomPage {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser} handleDeleteRoom={this.handleDeleteRoom} handleNewRoomPhoto={this.handleNewRoomPhoto}/>}/>
           <Route exact path='/rooms' render={routerProps=><RoomsContainer {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser}  handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike}/>}/>
         </div>
       </Router>
