@@ -36,6 +36,12 @@
   width: 100%;
 
 }
+.rooms-banner-img{
+  margin-top: 3em;
+  width: 100%;
+
+  
+}
 
 .banner-img{
   width: 100%;
@@ -44,7 +50,7 @@
 
 #navbar {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .navbar-logo{
@@ -72,7 +78,8 @@
 .login-logo{
   height: 15em;
   width: 15em;
-  margin-left: 17em;
+  position: relative;
+  margin-left: 19%;
   margin-top: 4em;
 }
 .design-image {
@@ -210,10 +217,15 @@
  }
 
  .rooms-container-content{
-   margin-top: 4em;
-  justify-content: center;
+   margin-top: 2em;
+   margin-bottom: 2em;
+   margin-left: 3em;
+   margin-right: 3em;
+   display: flex;
+  justify-content: space-between;
   text-align: center;
  }
+ 
 
 .room-page-header{
   margin: auto;
@@ -231,6 +243,17 @@
 .room-page-actions{
   justify-content: center;
   text-align: center;
+}
+
+.add-photo-form{
+  margin: auto;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  width: 60%;
+  background-color: rgba(0, 0, 0, 0.301) ;
+  border-radius: 5px;
 }
 
 

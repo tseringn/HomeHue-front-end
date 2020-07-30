@@ -43,7 +43,7 @@ class Login extends React.Component{
                   <div className="two fields">
                   <div className="field">
                     <label>Password</label>
-                    <input onChange={this.handleLoginChange} value= {this.state.login.password} name = "password" className = "input" placeholder="Password" type="password"/>
+                    <input onChange={this.handleLoginChange} value= {this.state.login.password} name = "password" className = "input" placeholder="Password" type="text" onClick={(e)=>{e.target.type==='password' ? e.target.type='text' : e.target.type='password'}}/>
                   </div>
                 </div>
                
@@ -122,8 +122,8 @@ class Login extends React.Component{
 
     createAccountForm = () => {
         const {name, username, password, email, image_url}=this.state.newUser
-        return (
-            <form onSubmit={this.handleSubmitAccount} >
+        return (    
+        <form onSubmit={this.handleSubmitAccount} >
         <div className="ui large form" id="login-form" >
         <h2>Create an Account</h2>
         <div className="two fields">
@@ -150,7 +150,7 @@ class Login extends React.Component{
             <div className="two fields">
                   <div className="field">
                     {/* <label>Password</label> */}
-                    <input onChange={this.handleInputFieldChange}  name='password' value={password} className = "input" placeholder="Password" type="password"/>
+                    <input onChange={this.handleInputFieldChange}  name='password' value={password} className = "input" placeholder="Password" type="text" onClick={(e)=>{e.target.type==='password' ? e.target.type='text' : e.target.type='password'}}/>
                 </div>
             </div>
 
@@ -174,7 +174,7 @@ class Login extends React.Component{
     render(){
         
         return(
-            <div className="login-page">
+            <div className="login-page" >
             <img className = "login-logo" src="./Logo.png" alt="logo" />
                 <div style={{display: 'flex', justifyContent: 'space-around'}}>
                 {this.state.newAccount ? this.createAccountForm() : this.loginForm()}

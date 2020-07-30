@@ -118,7 +118,7 @@ class UserPage extends React.Component{
                 <div className="field"> 
                     <div className="ui toggle checkbox">
                         <input onChange={this.handleCheck} checked={pvt} type="checkbox" name="pvt"/>
-                        <label style={{color: "white"}}>Make this room private</label>
+                        <label style={{color: "grey"}}>Make this room private</label>
                     </div>
                 </div>
             
@@ -183,35 +183,35 @@ class UserPage extends React.Component{
 
                         <div className="two fields">
                             <div className="field">
-                                <label>Name</label>
+                                <label style={{color: 'grey'}}>Name</label>
                                 <input onChange={this.handleEditUserChange} name='name' value={name} className = "input" placeholder="Name" type="text"/>
                             </div>
                         </div>
 
                         <div className="two fields">
                             <div className="field">
-                                <label>Username</label>
+                                <label style={{color: 'grey'}}>Username</label>
                                 <input onChange={this.handleEditUserChange}  name='username' value={username} className = "input" placeholder="Username" type="text"/>
                             </div>
                         </div>
 
                         <div className="two fields">
                             <div className="field">
-                                <label>Email</label>
+                                <label style={{color: 'grey'}}>Email</label>
                                 <input onChange={this.handleEditUserChange}  name='email' value={email} className = "input" placeholder="Email" type="email"/>
                             </div>
                         </div>
 
                         <div className="two fields">
                             <div className="field">
-                                <label>Password</label>
-                                <input onChange={this.handleEditUserChange}  name='password' value={password} className = "input" placeholder="Password" type="password"/>
+                                <label style={{color: 'grey'}}>Password</label>
+                                <input onChange={this.handleEditUserChange}  name='password' value={password} className = "input" placeholder="Password" type="password" onClick={(e)=>{e.target.type==='password' ? e.target.type='text' : e.target.type='password'}}/>
                             </div>
                         </div>
 
                         <div className="two fields">
                             <div className="field">
-                                <label>Profile Picture</label>
+                                <label style={{color: 'grey'}}>Profile Picture</label>
                                 <input onChange={this.handleEditUserChange}  name='image_url' value={image_url} className = "input" placeholder="Profile Image URL here...." type="text"/>
                             </div>
                         </div>

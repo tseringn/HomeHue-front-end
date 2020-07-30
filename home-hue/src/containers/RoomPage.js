@@ -1,11 +1,15 @@
 import React from 'react'
 import PhotoCard from '../components/PhotoCard'
+import { Button, Header, Image, Modal } from 'semantic-ui-react'
 
 class RoomPage extends React.Component{
 
     state = {
         img_url: '', 
+        loading: false
     }
+
+
 
     thisRoom=()=>{
        return this.props.rooms.find(room=> room.id==this.props.match.params.id)
@@ -18,6 +22,8 @@ class RoomPage extends React.Component{
 
     handleSubmit = (e) => {
         e.preventDefault()
+
+        this.setState({loading: true})
 
         if (this.state.img_url !== ''){
             fetch('http://localhost:3000/photos', {
@@ -35,6 +41,7 @@ class RoomPage extends React.Component{
             .then(newPhoto=> {
                 this.props.handleNewRoomPhoto(newPhoto)
                 this.setState({img_url: ''})
+                this.setState({loading: false})
             })  
         }
     }
@@ -55,11 +62,31 @@ class RoomPage extends React.Component{
         }
     }
 
+
+
+
+        modalModalExample = () => (
+
+        
+        <Modal open={this.state.loading} basic size='fullscreen' >
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <img src="../loading.gif" className="loading-gif" alt='loading' style={{ margin: 'auto', marginTop: '6em', width: '40%'}}/>
+            </div>
+        </Modal>
+       
+        )
+
     render(){
         console.log(this.props.match.params.id)
         return( 
-            <div className="room-page" style={{backgroundImage: `url(${this.thisRoom().img_url})`, backgroundSize:'100%', backgroundRepeat: "no-repeat", paddingBottom: "30%"}}>
-                
+            
+            <div className="room-page" style={{height: '100%', backgroundImage: `url(${this.thisRoom().img_url})`, backgroundSize:'cover', backgroundPosition: 'center', backgroundRepeat: "no-repeat", paddingBottom: "30%" }}>
+               
+
+                    {this.modalModalExample()}
+
+
+
                 <i className="arrow circle big left icon" onClick={()=>this.props.history.goBack()} style={{margin: '1em'}}></i>
                 <div className="room-page-header">
                     <h1 style={{fontSize: '40px'}}>{this.thisRoom().name}</h1>
@@ -71,16 +98,19 @@ class RoomPage extends React.Component{
                         <button className="ui secondary button" onClick={()=>this.deleteRoom()} style={{margin: '1em'}}> <i className="trash alternate icon"></i>Delete Room</button>
                     }
                     <br/>
+                    {this.roomBelongsToCurrentUser() &&
+                        <div className="add-photo-form">
+                            <div class="ui action input" style={{marginLeft: '2em'}}>
+                                <form className="ui form" onSubmit={this.handleSubmit} style={{display: 'inline'}}>
+                                    <input onChange={this.handleChange} type="text" value={this.state.img_url} placeholder="New Image URL Here"/>
+                                    <span><button type="submit" className="ui inverted grey button">Add Image <i className="plus icon"></i></button></span>
+                                </form>
+                            </div>
+                        </div>
+                    }
                 </div>
 
-                {this.roomBelongsToCurrentUser() &&
-                        <div class="ui action input" style={{marginLeft: '2em'}}>
-                            <form className="ui form" onSubmit={this.handleSubmit} style={{display: 'inline'}}>
-                                <input onChange={this.handleChange} type="text" value={this.state.img_url} placeholder="New Image URL Here"/>
-                                <span><button type="submit" className="ui inverted secondary button">Add Image <i className="plus icon"></i></button></span>
-                            </form>
-                        </div>
-                }
+
 
 
                 <div className="photo-card-container">

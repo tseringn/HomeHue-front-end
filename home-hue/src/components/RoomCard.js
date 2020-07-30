@@ -69,11 +69,34 @@ const RoomCard = (props) => {
         return fun>0?true:false
     }
 
+    const  getTimePassed=(updatedTime)=>{
+        let milliseconds=Date.now() - new Date(updatedTime)
+        let timePassed
+         let minutes=Math.round(milliseconds/(1000*60))
+         let hours=Math.round(minutes/60)
+         let days=Math.round(hours/24)
+         let weeks=Math.round(days/7)
+         let years=Math.round(weeks/52)
+         if(years>0){
+             timePassed=`${years} year${years>1 ? 's': ''}` 
+         }else if(weeks>0){
+             timePassed=`${weeks} week${weeks>1 ? 's': ''}`
+         }else if(days>0){
+             timePassed=`${days} day${days>1 ? 's': ''}`
+         }else if(hours>0){
+             timePassed=`${hours} hour${hours>1 ? 's': ''}`
+         }else if(minutes>0){
+             timePassed=`${minutes} minute${minutes>1 ? 's': ''}`
+         }else timePassed='less than a minute'
+         return timePassed
+     }
+    //  console.log(getTimePassed(new Date(98, 1)))
+
     return(   
                    
     <div className="ui card room-card" >
         <div className="content">
-            <div className="right floated meta">{props.created_at}</div>
+            <div className="right floated meta">{getTimePassed(props.created_at)}</div>
             <img className="ui avatar image" src={props.user.image_url} alt="user"/> @{props.user.username}
         </div>
         <div className="image">

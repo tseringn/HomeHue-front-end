@@ -8,9 +8,7 @@ class HomeContainer extends React.Component{
 
     render(){
 
-        let publicRooms= this.props.rooms.filter(room=>room.pvt===false)
-        let mostRecentRooms = publicRooms.slice(Math.max(publicRooms.length - 15, 0))
-        let mostLikedRooms = publicRooms.sort((a,b)=> a.likes.length < b.likes.length ? 1 : -1).slice(0,15)
+        
 
         return(
             <div>
