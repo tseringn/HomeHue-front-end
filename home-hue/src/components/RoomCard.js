@@ -1,39 +1,79 @@
 import React from 'react'
 
-
-
-
-const RoomCard = (props) => {
+ class RoomCard extends React.Component {
     
-  
+    state={
+        
+        text: '',
+        showComments: false
+        
+    }
+
+    handleCommentsClick = () => {
+        this.setState({showComments: !this.state.showComments})
+    }
+
+    handleChange = e => {
+        this.setState({ text: e.target.value})
+    }
     
-    const handleLikeClick = (e) => {
+    handleEnterComment = e => {
+        if(e.key==='Enter'){ 
+            if(this.props.currentUser){
+                this.submitComment()
+            } else {
+                this.props.history.push('/login')
+            }     
+        } 
+    }
+
+    submitComment = e => {
+        fetch('http://localhost:3000/comments',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json'
+            },
+            body: JSON.stringify({
+                text: this.state.text,
+                user_id: this.props.currentUser.id,
+                room_id: this.props.id
+            })
+        })
+        .then(resp=>resp.json())
+        .then(newComment => {
+            this.props.handleNewComment(newComment)
+            this.setState({text: ''})
+        })
+    }
+    
+    handleLikeClick = (e) => {
        
-        if(props.currentUser){ 
-            if (heartAppearance()){    
-                deleteLike()
+        if(this.props.currentUser){ 
+            if (this.heartAppearance()){    
+                this.deleteLike()
                 
                 // e.target.classList.remove('outline')
             } else {
-                postLike()
+                this.postLike()
                 // e.target.classList.add('outline')
             } 
         } else {
-            props.history.push('/login')
+            this.props.history.push('/login')
         }
     }
 
-    const deleteLike = () => {
+    deleteLike = () => {
        
-        let likeId = props.likes.find(like=>like.user_id===props.currentUser.id).id
+        let likeId = this.props.likes.find(like=>like.user_id===this.props.currentUser.id).id
         
         fetch(`http://localhost:3000/likes/${likeId}`,{method: "DELETE",})
-        props.handleUnlike(likeId, props.id)
+        this.props.handleUnlike(likeId, this.props.id)
        
         
     }
 
-    const postLike = () => {
+    postLike = () => {
         fetch('http://localhost:3000/likes', {
             method: "POST",
             headers: {
@@ -41,23 +81,23 @@ const RoomCard = (props) => {
                 'content-type': 'application/json'
             },
             body: JSON.stringify({
-                user_id: props.currentUser.id,
-                room_id: props.id
+                user_id: this.props.currentUser.id,
+                room_id: this.props.id
             })
         })
         .then(resp=>resp.json())
         .then(newLike=> {
         console.log(newLike)
-         props.handleNewRoomLike(newLike)
+         this.props.handleNewRoomLike(newLike)
          
         })
         .catch(error=> console.log(error))
     }
 
-    const heartAppearance = () => {
+     heartAppearance = () => {
         let fun=0
-        if (props.currentUser){        
-            if (props.likes.find(like=>like.user_id===props.currentUser.id)){
+        if (this.props.currentUser){        
+            if (this.props.likes.find(like=>like.user_id===this.props.currentUser.id)){
                 fun=1
             } else {
                 fun=0
@@ -69,9 +109,10 @@ const RoomCard = (props) => {
         return fun>0?true:false
     }
 
-    const  getTimePassed=(updatedTime)=>{
+      getTimePassed=(updatedTime)=>{
         let milliseconds=Date.now() - new Date(updatedTime)
         let timePassed
+         let seconds = Math.round(milliseconds/1000)
          let minutes=Math.round(milliseconds/(1000*60))
          let hours=Math.round(minutes/60)
          let days=Math.round(hours/24)
@@ -87,53 +128,71 @@ const RoomCard = (props) => {
              timePassed=`${hours} hour${hours>1 ? 's': ''}`
          }else if(minutes>0){
              timePassed=`${minutes} minute${minutes>1 ? 's': ''}`
-         }else timePassed='less than a minute'
+         }else timePassed=`${seconds} second${seconds>1 ? 's': ''}`
          return timePassed
      }
-    //  console.log(getTimePassed(new Date(98, 1)))
 
-    return(   
-                   
-    <div className="ui card room-card" >
-        <div className="content">
-            <div className="right floated meta">{getTimePassed(props.created_at)}</div>
-            <img className="ui avatar image" src={props.user.image_url} alt="user"/> @{props.user.username}
-        </div>
-        <div className="image">
-            <img className='room-image' src={props.img_url} alt={props.name}/>
-        </div>
+     renderComment = (comment) => {
+        let commentAuthor = this.props.users.find(user=>user.id===comment.user_id)
+         
+        return (
+            <p>
+            <p><img style={{width: '20px', height: '20px'}}className="ui avatar image" src={commentAuthor.image_url} alt="user"/><strong>@{commentAuthor.username}</strong><span className="right floated"><small>{this.getTimePassed(comment.created_at)}</small></span></p>
+            <p>{comment.text}</p>
+            </p>
+            )
+    }
+  
 
-        <div className="extra content" style={{backgroundColor: 'lightGrey'}}>
-            <div className="center aligned">
-                <button onClick={()=>props.history.push(`/rooms/${props.id}`)} className="ui basic button ">
-                <i className="eye icon"></i>
-                    View Room
-                </button>
+    render(){
+        return(   
+                    
+        <div className="ui card room-card" >
+            <div className="content">
+                <div className="right floated meta">{this.getTimePassed(this.props.created_at)}</div>
+                <img className="ui avatar image" src={this.props.user.image_url} alt="user"/> @{this.props.user.username}
             </div>
-        </div>
-        
-        <div className="content">
-            <h5><strong>{props.name}</strong></h5>
-            {props.description}
-        </div>
-        <div className="content">
-            <span className="right floated">
-            {heartAppearance()?<i onClick={handleLikeClick} className=  "heart red like icon"></i>
-            :<i onClick={(e)=>handleLikeClick()} className=  "heart outline red like icon"></i>}
-            {props.likes.length}
-            </span>
-            <i className="comment icon"></i>
-            3 comments
-        </div>
-        <div className="extra content">
-            <div className="ui large transparent left icon input">
-            <i className="heart outline icon"></i>
-            <input type="text" placeholder="Add Comment..."/>
+            <div className="image">
+                <img className='room-image' src={this.props.img_url} alt={this.props.name}/>
             </div>
-        </div>
-    </div> 
-   
-    )
+
+            <div className="extra content" style={{backgroundColor: 'lightGrey'}}>
+                <div className="center aligned">
+                    <button onClick={()=>this.props.history.push(`/rooms/${this.props.id}`)} className="ui basic button ">
+                    <i className="eye icon"></i>
+                        View Room
+                    </button>
+                </div>
+            </div>
+            
+            <div className="content">
+                <h5><strong>{this.props.name}</strong></h5>
+                {this.props.description}
+            </div>
+            <div className="content">
+                <span className="right floated">
+                {this.heartAppearance()?<i onClick={this.handleLikeClick} className=  "heart red like icon"></i>
+                :<i onClick={(e)=>this.handleLikeClick()} className=  "heart outline red like icon"></i>}
+                {this.props.likes.length}
+                </span>
+                <span onClick={this.handleCommentsClick}>
+                    <i className="comment icon"></i>
+                    {this.props.comments.length} comments
+                </span>
+                <br/>
+                <hr/>
+                {this.state.showComments && this.props.comments.map(comment=>this.renderComment(comment))}
+            </div>
+            <div className="extra content">
+                <div className="ui large transparent left icon input">
+                <i className="heart outline icon"></i>
+                <input type="text" value={this.state.text} onKeyDown={this.handleEnterComment}  onChange={this.handleChange} placeholder="Add Comment..."/>
+                </div>
+            </div>
+        </div> 
+    
+        )
+    }
 }
 
 

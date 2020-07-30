@@ -59,7 +59,7 @@ class RoomsContainer extends React.Component {
 
                 </div>
                 <div className="room-card-container">
-                    {filteredRooms.map(room=>(<RoomCard key ={room.id} {...room} currentUser={this.props.currentUser} history={this.props.history} handleNewRoomLike={this.props.handleNewRoomLike} handleUnlike={this.props.handleUnlike}/>))}
+                    {filteredRooms.map(room=>(<RoomCard key ={room.id} {...room} currentUser={this.props.currentUser} history={this.props.history} handleNewRoomLike={this.props.handleNewRoomLike} handleUnlike={this.props.handleUnlike} handleNewComment={this.props.handleNewComment} users={this.props.users}/>))}
                 </div>
             </div>
             

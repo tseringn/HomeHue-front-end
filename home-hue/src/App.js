@@ -64,6 +64,16 @@ state={
     this.setState({rooms: newRoomsArray})
   }
 
+  handleNewComment =(newComment) => {
+    let newRoomsArray = this.state.rooms.map(room=>{
+      if (room.id===newComment.room_id){
+        return {...room, comments:[...room.comments, newComment]}
+      }
+      return room
+    })
+    this.setState({rooms: newRoomsArray})
+  }
+
   handleNewRoomPhoto =(newPhoto) => {
     let newRoomsArray = this.state.rooms.map(room=>{
       if (room.id===newPhoto.room_id){
@@ -111,9 +121,9 @@ state={
           <Route exact path="/login" render={routerProps=>
               <Login {...routerProps} users={this.state.users} setCurrentUser={this.setCurrentUser} handleNewUser={this.handleNewUser}/>
             }/>
-          <Route exact path='/@:id' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} rooms={this.state.rooms} handleNewRoom={this.handleNewRoom} handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike} handleEditedUser={this.handleEditedUser} updateCurrentUser={this.updateCurrentUser}/>} />
+          <Route exact path='/@:id' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} rooms={this.state.rooms} handleNewRoom={this.handleNewRoom} handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike} handleEditedUser={this.handleEditedUser} updateCurrentUser={this.updateCurrentUser} handleNewComment={this.handleNewComment} users={this.state.users}/>} />
           <Route exact  path ='/rooms/:id' render={routerProps=><RoomPage {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser} handleDeleteRoom={this.handleDeleteRoom} handleNewRoomPhoto={this.handleNewRoomPhoto}/>}/>
-          <Route exact path='/rooms' render={routerProps=><RoomsContainer {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser}  handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike}/>}/>
+          <Route exact path='/rooms' render={routerProps=><RoomsContainer {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser}  handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike} handleNewComment={this.handleNewComment} users={this.state.users}/>}/>
         </div>
       </Router>
     )
