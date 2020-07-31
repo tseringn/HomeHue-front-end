@@ -1,7 +1,7 @@
 import React from 'react';
 import RoomCard from '../components/RoomCard'
 
-import { Button, Card, Image, Icon, Modal, Header } from 'semantic-ui-react'
+import {  Modal, Header } from 'semantic-ui-react'
 
 
 class UserPage extends React.Component{
@@ -38,7 +38,7 @@ class UserPage extends React.Component{
 
     getUsersRooms = () => {
         let userRooms = this.props.rooms.filter(room => room.user_id===this.props.currentUser.id)
-        return userRooms.map(room=>(<RoomCard key ={room.id} {...room} currentUser={this.props.currentUser} handleNewRoomLike={this.props.handleNewRoomLike} handleUnlike={this.props.handleUnlike} handleNewComment={this.props.handleNewComment} history={this.props.history} users={this.props.users}/>))
+        return userRooms.map(room=>(<RoomCard key ={room.id} {...room} currentUser={this.props.currentUser} handleNewRoomLike={this.props.handleNewRoomLike} handleUnlike={this.props.handleUnlike} handleNewComment={this.props.handleNewComment} history={this.props.history} users={this.props.users} handleUnComment={this.props.handleUnComment} handleEditComment={this.props.handleEditComment} />))
     }
 
     handleChange = (e) => {

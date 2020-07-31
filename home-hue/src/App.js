@@ -98,6 +98,35 @@ state={
     this.setState({rooms: newRoomsArray})
   }
 
+  handleEditComment=(roomId, editedComment)=>{
+    console.log(editedComment)
+    let toBeEditedRoom=this.state.rooms.find(room=> room.id==roomId)
+    let editedRoom={...toBeEditedRoom, comments:toBeEditedRoom.comments.map(comment=>{
+      if(comment.id===editedComment.id){
+        return editedComment
+      }else return comment
+    })}
+
+    this.setState({rooms: [...this.state.rooms.map(room=>{
+      if(room.id===roomId){
+        return editedRoom
+      }else return room
+    }) ]})
+  }
+
+  handleUnComment = (commentId, roomId) => {
+    let room = this.state.rooms.find(room=> room.id===roomId)
+    let editedRoom ={...room, comments: [...room.comments.filter(comment=>comment.id !== commentId)]}
+    let newRoomsArray = this.state.rooms.map(room=>{
+      if (room.id===roomId){
+        return editedRoom
+      }
+      return room
+    })
+    
+    this.setState({rooms: newRoomsArray})
+  }
+
   setCurrentUser=(user)=>{
     this.setState({currentUser: user})
 
@@ -121,9 +150,9 @@ state={
           <Route exact path="/login" render={routerProps=>
               <Login {...routerProps} users={this.state.users} setCurrentUser={this.setCurrentUser} handleNewUser={this.handleNewUser}/>
             }/>
-          <Route exact path='/@:id' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} rooms={this.state.rooms} handleNewRoom={this.handleNewRoom} handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike} handleEditedUser={this.handleEditedUser} updateCurrentUser={this.updateCurrentUser} handleNewComment={this.handleNewComment} users={this.state.users}/>} />
+          <Route exact path='/@:id' render= {routerProps => <UserPage {...routerProps} currentUser={this.state.currentUser} rooms={this.state.rooms} handleNewRoom={this.handleNewRoom} handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike} handleEditedUser={this.handleEditedUser} updateCurrentUser={this.updateCurrentUser} handleNewComment={this.handleNewComment} users={this.state.users} handleUnComment={this.handleUnComment} handleEditComment={this.handleEditComment} />} />
           <Route exact  path ='/rooms/:id' render={routerProps=><RoomPage {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser} handleDeleteRoom={this.handleDeleteRoom} handleNewRoomPhoto={this.handleNewRoomPhoto}/>}/>
-          <Route exact path='/rooms' render={routerProps=><RoomsContainer {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser}  handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike} handleNewComment={this.handleNewComment} users={this.state.users}/>}/>
+          <Route exact path='/rooms' render={routerProps=><RoomsContainer {...routerProps} rooms={this.state.rooms} currentUser={this.state.currentUser}  handleNewRoomLike={this.handleNewRoomLike} handleUnlike={this.handleUnlike} handleNewComment={this.handleNewComment} users={this.state.users} handleUnComment={this.handleUnComment} handleEditComment={this.handleEditComment}/>}/>
         </div>
       </Router>
     )

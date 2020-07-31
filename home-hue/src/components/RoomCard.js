@@ -3,7 +3,8 @@ import React from 'react'
  class RoomCard extends React.Component {
     
     state={
-        
+        commentId: '',
+        edit: false,
         text: '',
         showComments: false
         
@@ -17,17 +18,17 @@ import React from 'react'
         this.setState({ text: e.target.value})
     }
     
-    handleEnterComment = e => {
+    handleEnterComment = (e) => {
         if(e.key==='Enter'){ 
             if(this.props.currentUser){
-                this.submitComment()
+                this.state.edit?this.patchComment():this.submitComment()
             } else {
                 this.props.history.push('/login')
             }     
         } 
     }
 
-    submitComment = e => {
+    submitComment = e=> {
         fetch('http://localhost:3000/comments',{
             method: 'POST',
             headers: {
@@ -132,24 +133,77 @@ import React from 'react'
          return timePassed
      }
 
+
+     deleteComment=(id)=>{
+        fetch(`http://localhost:3000/comments/${id}`,{method: "DELETE"})
+            this.props.handleUnComment(id, this.props.id) 
+     }
+
+     patchComment=()=>{
+         
+        fetch(`http://localhost:3000/comments/${this.state.commentId}`,
+        {method: "PATCH",
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            text: this.state.text
+        })
+         })
+        .then(res=>res.json())
+        .then(editedComment=>{
+            this.props.handleEditComment( this.props.id, editedComment)
+            this.setState({text: '', edit: false})
+        })
+    }
+
+     handleChangeComment=(e,comment)=>{
+        if(e.target.value==='delete'){
+            this.deleteComment(comment.id)
+        }else if(e.target.value==='edit'){
+            this.setState({edit: true, commentId: comment.id, text: comment.text})
+           
+        }
+    }
+
+    renderEditAndDeleteComment=(comment)=>{
+        if(comment.user_id===this.props.currentUser.id){
+        return (
+            <select selected='' className='final-choice' onChange={event=>this.handleChangeComment(event, comment)}>
+            <option selected null hidden style={{display: 'none'}} value='b'></option>
+            <option>delete</option>
+            <option>edit</option>
+           </select>
+        )}
+    }
+
+    
+
      renderComment = (comment) => {
         let commentAuthor = this.props.users.find(user=>user.id===comment.user_id)
          
         return (
-            <p>
-            <p><img style={{width: '20px', height: '20px'}}className="ui avatar image" src={commentAuthor.image_url} alt="user"/><strong>@{commentAuthor.username}</strong><span className="right floated"><small>{this.getTimePassed(comment.created_at)}</small></span></p>
+            <p className='comments'>
+            <p><img style={{width: '20px', height: '20px'}}className="ui avatar image" src={commentAuthor.image_url} alt="user"/>
+                <strong>@{commentAuthor.username}</strong>
+                <span className="right floated">
+                    <small>{this.getTimePassed(comment.updated_at)}</small>
+                       {this.props.currentUser&&this.renderEditAndDeleteComment(comment)}
+                    </span></p>
             <p>{comment.text}</p>
             </p>
             )
     }
-  
+
 
     render(){
+
         return(   
                     
         <div className="ui card room-card" >
             <div className="content">
-                <div className="right floated meta">{this.getTimePassed(this.props.created_at)}</div>
+                <div className="right floated meta">{this.getTimePassed(this.props.created_at)} ago</div>
                 <img className="ui avatar image" src={this.props.user.image_url} alt="user"/> @{this.props.user.username}
             </div>
             <div className="image">
@@ -181,12 +235,13 @@ import React from 'react'
                 </span>
                 <br/>
                 <hr/>
+               
                 {this.state.showComments && this.props.comments.map(comment=>this.renderComment(comment))}
             </div>
             <div className="extra content">
                 <div className="ui large transparent left icon input">
                 <i className="heart outline icon"></i>
-                <input type="text" value={this.state.text} onKeyDown={this.handleEnterComment}  onChange={this.handleChange} placeholder="Add Comment..."/>
+                <input type="text"  value={this.state.text} onKeyDown={this.handleEnterComment}  onChange={this.handleChange} placeholder="Add Comment..."/>
                 </div>
             </div>
         </div> 

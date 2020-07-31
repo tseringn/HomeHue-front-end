@@ -256,6 +256,13 @@
   border-radius: 5px;
 }
 
+.final-choice{
+  width: 15px;
+  border: none;
+  background-color: white ;
+  margin-left: 1em;
+}
+
 
 
 
