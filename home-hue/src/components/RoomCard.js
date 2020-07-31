@@ -231,7 +231,7 @@ import React from 'react'
                 </span>
                 <span onClick={this.handleCommentsClick}>
                     <i className="comment icon"></i>
-                    {this.props.comments.length} comments
+                    {this.props.comments.length} comment{this.props.comments.length!==1 ? 's' : ''}
                 </span>
                 <br/>
                 <hr/>
