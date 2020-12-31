@@ -10,10 +10,6 @@ import React from 'react'
 //     return rgbToHex(parseInt(arrOfNumberStrings[0]), parseInt(arrOfNumberStrings[1]), parseInt(arrOfNumberStrings[2]))
 // }
 
-
-
-
-
 const PhotoCard = (props) => {
 
     const  getHex=(color)=>{
@@ -24,7 +20,7 @@ const PhotoCard = (props) => {
             window.open(`https://encycolorpedia.com/${res.hex.clean}`,'_blank') 
             console.log(res.hex.clean)
          })
-     }
+    }
 
     return(
         <div>

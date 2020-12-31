@@ -91,7 +91,7 @@ class Login extends React.Component{
             method: "POST",
             headers: {
                 accept: 'application/json',
-            'content-type': 'application/json'
+                'content-type': 'application/json'
             },
             body: JSON.stringify({
 
